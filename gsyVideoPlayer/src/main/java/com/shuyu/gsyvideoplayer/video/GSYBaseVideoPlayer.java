@@ -68,7 +68,7 @@ public abstract class GSYBaseVideoPlayer extends FrameLayout implements GSYMedia
 
     protected int[] mListItemSize;//当前item的大小
 
-    protected int mCurrentState = -1; //当前的播放状态
+    public int mCurrentState = -1; //当前的播放状态
 
     protected int mRotate = 0; //针对某些视频的旋转信息做了旋转处理
 
@@ -98,7 +98,7 @@ public abstract class GSYBaseVideoPlayer extends FrameLayout implements GSYMedia
 
     protected File mCachePath;
 
-    protected ViewGroup mTextureViewContainer; //渲染控件父类
+    public ViewGroup mTextureViewContainer; //渲染控件父类
 
     protected View mSmallClose; //小窗口关闭按键
 

@@ -48,9 +48,9 @@ public class DetailPlayer extends AppCompatActivity {
         setContentView(R.layout.activity_detail_player);
         ButterKnife.bind(this);
 
-        String url = "http://baobab.wdjcdn.com/14564977406580.mp4";
+        String url = "https://static.donguo.me//video/ip/course/frog1_ad.mp4";
         //String url = "https://d131x7vzzf85jg.cloudfront.net/upload/documents/paper/b2/61/00/00/20160420_115018_b544.mp4";
-        detailPlayer.setUp(url, true, null, "测试视频");
+        detailPlayer.setUp(url, true, null, "koala");
 
         //增加封面
         ImageView imageView = new ImageView(this);

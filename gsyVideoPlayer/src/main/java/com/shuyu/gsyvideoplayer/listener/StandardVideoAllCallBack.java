@@ -11,4 +11,6 @@ public interface StandardVideoAllCallBack extends VideoAllCallBack {
     //点击了全屏播放中的空白区域
     void onClickBlankFullscreen(String url, Object... objects);
 
+    void onVideoFocusChange(int focusCode);
+
 }

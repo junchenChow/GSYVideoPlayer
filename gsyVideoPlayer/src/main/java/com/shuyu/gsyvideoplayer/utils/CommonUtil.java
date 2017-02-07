@@ -13,7 +13,6 @@ import android.support.v7.internal.view.ContextThemeWrapper;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 
 import java.io.File;

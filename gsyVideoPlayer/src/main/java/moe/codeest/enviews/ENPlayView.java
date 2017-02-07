@@ -30,9 +30,9 @@ public class ENPlayView extends View {
 
     public static int DEFAULT_BG_LINE_COLOR = 0xfffafafa;
 
-    public static int DEFAULT_LINE_WIDTH = 14;
+    public static int DEFAULT_LINE_WIDTH = 5;
 
-    public static int DEFAULT_BG_LINE_WIDTH = 12;
+    public static int DEFAULT_BG_LINE_WIDTH = 5;
 
     public static int DEFAULT_DURATION = 1200;
 
@@ -162,43 +162,45 @@ public class ENPlayView extends View {
     }
 
     public void play() {
-        if (mCurrentState == STATE_PLAY) {
-            return;
-        }
-        mCurrentState = STATE_PLAY;
-        ValueAnimator valueAnimator = ValueAnimator.ofFloat(1.f, 100.f);
-        valueAnimator.setDuration(mDuration);
-        valueAnimator.setInterpolator(new AnticipateInterpolator());
-        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                mFraction = 1 - valueAnimator.getAnimatedFraction();
-                invalidate();
-            }
-        });
-        if (!valueAnimator.isRunning()) {
-            valueAnimator.start();
-        }
+        setVisibility(GONE);
+//        if (mCurrentState == STATE_PLAY) {
+//            return;
+//        }
+//        mCurrentState = STATE_PLAY;
+//        ValueAnimator valueAnimator = ValueAnimator.ofFloat(1.f, 100.f);
+//        valueAnimator.setDuration(mDuration);
+//        valueAnimator.setInterpolator(new AnticipateInterpolator());
+//        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+//            @Override
+//            public void onAnimationUpdate(ValueAnimator valueAnimator) {
+//                mFraction = 1 - valueAnimator.getAnimatedFraction();
+//                invalidate();
+//            }
+//        });
+//        if (!valueAnimator.isRunning()) {
+//            valueAnimator.start();
+//        }
     }
 
     public void pause() {
-        if (mCurrentState == STATE_PAUSE) {
-            return;
-        }
-        mCurrentState = STATE_PAUSE;
-        ValueAnimator valueAnimator = ValueAnimator.ofFloat(1.f, 100.f);
-        valueAnimator.setDuration(mDuration);
-        valueAnimator.setInterpolator(new AnticipateInterpolator());
-        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                mFraction = valueAnimator.getAnimatedFraction();
-                invalidate();
-            }
-        });
-        if (!valueAnimator.isRunning()) {
-            valueAnimator.start();
-        }
+        setVisibility(GONE);
+//        if (mCurrentState == STATE_PAUSE) {
+//            return;
+//        }
+//        mCurrentState = STATE_PAUSE;
+//        ValueAnimator valueAnimator = ValueAnimator.ofFloat(1.f, 100.f);
+//        valueAnimator.setDuration(mDuration);
+//        valueAnimator.setInterpolator(new AnticipateInterpolator());
+//        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+//            @Override
+//            public void onAnimationUpdate(ValueAnimator valueAnimator) {
+//                mFraction = valueAnimator.getAnimatedFraction();
+//                invalidate();
+//            }
+//        });
+//        if (!valueAnimator.isRunning()) {
+//            valueAnimator.start();
+//        }
     }
 
     public int getCurrentState() {

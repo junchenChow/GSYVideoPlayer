@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
@@ -170,6 +171,7 @@ public abstract class GSYVideoPlayer extends GSYBaseVideoPlayer implements View.
         mTopContainer = (ViewGroup) findViewById(R.id.layout_top);
         if (isInEditMode())
             return;
+        mProgressBar.setEnabled(false);
         mStartButton.setOnClickListener(this);
         mFullscreenButton.setOnClickListener(this);
         mProgressBar.setOnSeekBarChangeListener(this);
@@ -277,6 +279,7 @@ public abstract class GSYVideoPlayer extends GSYBaseVideoPlayer implements View.
                 resetProgressAndTime();
                 break;
             case CURRENT_STATE_PLAYING:
+                mProgressBar.setEnabled(true);
                 startProgressTimer();
                 break;
             case CURRENT_STATE_PAUSE:
@@ -355,7 +358,7 @@ public abstract class GSYVideoPlayer extends GSYBaseVideoPlayer implements View.
     /**
      * 播放按键的逻辑
      */
-    private void startButtonLogic() {
+    public void startButtonLogic() {
         if (mVideoAllCallBack != null && mCurrentState == CURRENT_STATE_NORMAL) {
             Debuger.printfLog("onClickStartIcon");
             mVideoAllCallBack.onClickStartIcon(mUrl, mObjects);
@@ -389,27 +392,12 @@ public abstract class GSYVideoPlayer extends GSYBaseVideoPlayer implements View.
     private AudioManager.OnAudioFocusChangeListener onAudioFocusChangeListener = new AudioManager.OnAudioFocusChangeListener() {
         @Override
         public void onAudioFocusChange(int focusChange) {
-            switch (focusChange) {
-                case AudioManager.AUDIOFOCUS_GAIN:
-                    break;
-                case AudioManager.AUDIOFOCUS_LOSS:
-                    mHandler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            releaseAllVideos();
-                        }
-                    });
-                    break;
-                case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
-                    if (GSYVideoManager.instance().getMediaPlayer().isPlaying()) {
-                        GSYVideoManager.instance().getMediaPlayer().pause();
-                    }
-                    break;
-                case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK:
-                    break;
-            }
+            onVideoFocusChange(focusChange);
         }
     };
+
+    public void onVideoFocusChange(int focusChangeCode) {
+    }
 
 
     /**
@@ -424,12 +412,11 @@ public abstract class GSYVideoPlayer extends GSYBaseVideoPlayer implements View.
      */
     @Override
     public void onVideoPause() {
-        if (GSYVideoManager.instance().getMediaPlayer().isPlaying()) {
+        if (GSYVideoManager.instance().getMediaPlayer() != null && GSYVideoManager.instance().getMediaPlayer().isPlaying()) {
             setStateAndUi(CURRENT_STATE_PAUSE);
             mPauseTime = System.currentTimeMillis();
             mCurrentPosition = GSYVideoManager.instance().getMediaPlayer().getCurrentPosition();
-            if (GSYVideoManager.instance().getMediaPlayer() != null)
-                GSYVideoManager.instance().getMediaPlayer().pause();
+            GSYVideoManager.instance().getMediaPlayer().pause();
         }
     }
 
@@ -539,6 +526,8 @@ public abstract class GSYVideoPlayer extends GSYBaseVideoPlayer implements View.
         if (id == R.id.surface_container) {
             switch (event.getAction()) {
                 case MotionEvent.ACTION_DOWN:
+                    if (getCurrentState() == CURRENT_STATE_AUTO_COMPLETE)
+                        break;
                     mTouchingProgressBar = true;
                     mDownX = x;
                     mDownY = y;
@@ -551,6 +540,8 @@ public abstract class GSYVideoPlayer extends GSYBaseVideoPlayer implements View.
 
                     break;
                 case MotionEvent.ACTION_MOVE:
+                    if (getCurrentState() == CURRENT_STATE_AUTO_COMPLETE)
+                        break;
                     float deltaX = x - mDownX;
                     float deltaY = y - mDownY;
                     float absDeltaX = Math.abs(deltaX);
@@ -585,7 +576,7 @@ public abstract class GSYVideoPlayer extends GSYBaseVideoPlayer implements View.
                             }
                         }
                     }
-                    if (mChangePosition) {
+                    if (mChangePosition && mProgressBar.getProgress() > 0) {
                         int totalTimeDuration = getDuration();
                         mSeekTimePosition = (int) (mDownPosition + deltaX * totalTimeDuration / mScreenWidth);
                         if (mSeekTimePosition > totalTimeDuration)
@@ -611,6 +602,8 @@ public abstract class GSYVideoPlayer extends GSYBaseVideoPlayer implements View.
 
                     break;
                 case MotionEvent.ACTION_UP:
+                    if (getCurrentState() == CURRENT_STATE_AUTO_COMPLETE)
+                        break;
                     mTouchingProgressBar = false;
                     dismissProgressDialog();
                     dismissVolumeDialog();
@@ -772,7 +765,7 @@ public abstract class GSYVideoPlayer extends GSYBaseVideoPlayer implements View.
                 mVideoAllCallBack.onClickSeekbar(mUrl, mObjects);
             }
         }
-        if (GSYVideoManager.instance().getMediaPlayer() != null && mHadPlay) {
+        if (GSYVideoManager.instance().getMediaPlayer() != null && mCurrentState == CURRENT_STATE_PLAYING) {
             int time = seekBar.getProgress() * getDuration() / 100;
             GSYVideoManager.instance().getMediaPlayer().seekTo(time);
         }
@@ -1222,7 +1215,7 @@ public abstract class GSYVideoPlayer extends GSYBaseVideoPlayer implements View.
     public long getNetSpeed() {
         if (GSYVideoManager.instance().getMediaPlayer() != null
                 && (GSYVideoManager.instance().getMediaPlayer() instanceof IjkMediaPlayer)) {
-            return ((IjkMediaPlayer)GSYVideoManager.instance().getMediaPlayer()).getTcpSpeed();
+            return ((IjkMediaPlayer) GSYVideoManager.instance().getMediaPlayer()).getTcpSpeed();
         } else {
             return -1;
         }

@@ -16,6 +16,7 @@ import com.example.gsyvideoplayer.model.SwitchVideoModel;
 import com.example.gsyvideoplayer.video.SampleVideo;
 import com.shuyu.gsyvideoplayer.GSYVideoPlayer;
 import com.shuyu.gsyvideoplayer.utils.FileUtils;
+import com.shuyu.gsyvideoplayer.utils.ListVideoUtil;
 import com.shuyu.gsyvideoplayer.utils.OrientationUtils;
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 
@@ -72,7 +73,6 @@ public class PlayActivity extends AppCompatActivity {
         list.add(switchVideoModel2);
 
         videoPlayer.setUp(list, true, "");
-
         //增加封面
         ImageView imageView = new ImageView(this);
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
@@ -117,6 +117,7 @@ public class PlayActivity extends AppCompatActivity {
 
         //过渡动画
         initTransition();
+        orientationUtils.resolveByClick();
     }
 
 

@@ -104,6 +104,11 @@ public class SampleListener implements StandardVideoAllCallBack {
     }
 
     @Override
+    public void onVideoFocusChange(int focusCode) {
+
+    }
+
+    @Override
     public void onPrepared(String url, Object... objects) {
 
     }
