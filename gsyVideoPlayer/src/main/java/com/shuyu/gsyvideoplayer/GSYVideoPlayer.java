@@ -35,6 +35,7 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import tv.danmaku.ijk.media.player.AbstractMediaPlayer;
 import tv.danmaku.ijk.media.player.IMediaPlayer;
 import tv.danmaku.ijk.media.player.IjkMediaPlayer;
 
@@ -317,7 +318,10 @@ public abstract class GSYVideoPlayer extends GSYBaseVideoPlayer implements View.
                 }
                 startButtonLogic();
             } else if (mCurrentState == CURRENT_STATE_PLAYING) {
-                GSYVideoManager.instance().getMediaPlayer().pause();
+                AbstractMediaPlayer mediaPlayer = GSYVideoManager.instance().getMediaPlayer();
+                if (mediaPlayer == null)
+                    return;
+                mediaPlayer.pause();
                 setStateAndUi(CURRENT_STATE_PAUSE);
                 if (mVideoAllCallBack != null && isCurrentMediaListener()) {
                     if (mIfCurrentIsFullscreen) {
@@ -329,6 +333,9 @@ public abstract class GSYVideoPlayer extends GSYBaseVideoPlayer implements View.
                     }
                 }
             } else if (mCurrentState == CURRENT_STATE_PAUSE) {
+                AbstractMediaPlayer mediaPlayer = GSYVideoManager.instance().getMediaPlayer();
+                if (mediaPlayer == null)
+                    return;
                 if (mVideoAllCallBack != null && isCurrentMediaListener()) {
                     if (mIfCurrentIsFullscreen) {
                         Debuger.printfLog("onClickResumeFullscreen");
@@ -338,7 +345,7 @@ public abstract class GSYVideoPlayer extends GSYBaseVideoPlayer implements View.
                         mVideoAllCallBack.onClickResume(mUrl, mObjects);
                     }
                 }
-                GSYVideoManager.instance().getMediaPlayer().start();
+                mediaPlayer.start();
                 setStateAndUi(CURRENT_STATE_PLAYING);
             } else if (mCurrentState == CURRENT_STATE_AUTO_COMPLETE) {
                 startButtonLogic();
