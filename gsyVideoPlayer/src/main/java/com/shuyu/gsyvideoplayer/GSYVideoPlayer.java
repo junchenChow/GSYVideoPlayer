@@ -602,7 +602,7 @@ public abstract class GSYVideoPlayer extends GSYBaseVideoPlayer implements View.
                             }
                         }
                     }
-                    if (mChangePosition && mProgressBar.getProgress() > 0) {
+                    if (mChangePosition) {
                         int totalTimeDuration = getDuration();
                         mSeekTimePosition = (int) (mDownPosition + deltaX * totalTimeDuration / mScreenWidth);
                         if (mSeekTimePosition > totalTimeDuration)
@@ -634,7 +634,7 @@ public abstract class GSYVideoPlayer extends GSYBaseVideoPlayer implements View.
                     dismissProgressDialog();
                     dismissVolumeDialog();
                     dismissBrightnessDialog();
-                    if (mChangePosition && mProgressBar.getProgress() > 0) {
+                    if (mChangePosition) {
                         GSYVideoManager.instance().getMediaPlayer().seekTo(mSeekTimePosition);
                         int duration = getDuration();
                         int progress = mSeekTimePosition * 100 / (duration == 0 ? 1 : duration);
