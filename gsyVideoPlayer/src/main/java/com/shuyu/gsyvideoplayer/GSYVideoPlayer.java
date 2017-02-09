@@ -321,7 +321,13 @@ public abstract class GSYVideoPlayer extends GSYBaseVideoPlayer implements View.
                 AbstractMediaPlayer mediaPlayer = GSYVideoManager.instance().getMediaPlayer();
                 if (mediaPlayer == null)
                     return;
-                mediaPlayer.pause();
+                try {
+                    if (mediaPlayer.isPlaying()) {
+                        mediaPlayer.pause();
+                    }
+                } catch (IllegalStateException e) {
+                    e.printStackTrace();
+                }
                 setStateAndUi(CURRENT_STATE_PAUSE);
                 if (mVideoAllCallBack != null && isCurrentMediaListener()) {
                     if (mIfCurrentIsFullscreen) {
@@ -345,7 +351,11 @@ public abstract class GSYVideoPlayer extends GSYBaseVideoPlayer implements View.
                         mVideoAllCallBack.onClickResume(mUrl, mObjects);
                     }
                 }
-                mediaPlayer.start();
+                try {
+                    mediaPlayer.start();
+                } catch (IllegalStateException e) {
+                    e.printStackTrace();
+                }
                 setStateAndUi(CURRENT_STATE_PLAYING);
             } else if (mCurrentState == CURRENT_STATE_AUTO_COMPLETE) {
                 startButtonLogic();
@@ -419,11 +429,16 @@ public abstract class GSYVideoPlayer extends GSYBaseVideoPlayer implements View.
      */
     @Override
     public void onVideoPause() {
-        if (GSYVideoManager.instance().getMediaPlayer() != null && GSYVideoManager.instance().getMediaPlayer().isPlaying()) {
+        AbstractMediaPlayer mediaPlayer = GSYVideoManager.instance().getMediaPlayer();
+        if (mediaPlayer != null && mediaPlayer.isPlaying()) {
             setStateAndUi(CURRENT_STATE_PAUSE);
             mPauseTime = System.currentTimeMillis();
             mCurrentPosition = GSYVideoManager.instance().getMediaPlayer().getCurrentPosition();
-            GSYVideoManager.instance().getMediaPlayer().pause();
+            try {
+                mediaPlayer.pause();
+            } catch (IllegalStateException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -435,9 +450,13 @@ public abstract class GSYVideoPlayer extends GSYBaseVideoPlayer implements View.
         mPauseTime = 0;
         if (mCurrentState == CURRENT_STATE_PAUSE) {
             if (mCurrentPosition > 0 && GSYVideoManager.instance().getMediaPlayer() != null) {
-                setStateAndUi(CURRENT_STATE_PLAYING);
-                GSYVideoManager.instance().getMediaPlayer().seekTo(mCurrentPosition);
-                GSYVideoManager.instance().getMediaPlayer().start();
+                try {
+                    setStateAndUi(CURRENT_STATE_PLAYING);
+                    GSYVideoManager.instance().getMediaPlayer().seekTo(mCurrentPosition);
+                    GSYVideoManager.instance().getMediaPlayer().start();
+                } catch (IllegalStateException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
@@ -615,7 +634,7 @@ public abstract class GSYVideoPlayer extends GSYBaseVideoPlayer implements View.
                     dismissProgressDialog();
                     dismissVolumeDialog();
                     dismissBrightnessDialog();
-                    if (mChangePosition) {
+                    if (mChangePosition && mProgressBar.getProgress() > 0) {
                         GSYVideoManager.instance().getMediaPlayer().seekTo(mSeekTimePosition);
                         int duration = getDuration();
                         int progress = mSeekTimePosition * 100 / (duration == 0 ? 1 : duration);

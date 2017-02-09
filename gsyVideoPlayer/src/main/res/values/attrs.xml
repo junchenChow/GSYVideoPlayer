@@ -6,6 +6,8 @@
         <attr name="play_bg_line_color" format="color" />
         <attr name="play_line_width" format="integer" />
         <attr name="play_bg_line_width" format="integer" />
+        <attr name="play_visible_handle" format="boolean" />
+
     </declare-styleable>
 
     <declare-styleable name="download">
