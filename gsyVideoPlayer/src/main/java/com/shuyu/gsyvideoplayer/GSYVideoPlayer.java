@@ -237,9 +237,9 @@ public abstract class GSYVideoPlayer extends GSYBaseVideoPlayer implements View.
         mCache = cacheWithPlay;
         mCachePath = cachePath;
         mOriginUrl = url;
-        if (isCurrentMediaListener() &&
-                (System.currentTimeMillis() - CLICK_QUIT_FULLSCREEN_TIME) < FULL_SCREEN_NORMAL_DELAY)
-            return false;
+//        if (isCurrentMediaListener() &&
+//                (System.currentTimeMillis() - CLICK_QUIT_FULLSCREEN_TIME) < FULL_SCREEN_NORMAL_DELAY)
+//            return false;
         mCurrentState = CURRENT_STATE_NORMAL;
         if (cacheWithPlay && url.startsWith("http") && !url.contains("127.0.0.1")) {
             HttpProxyCacheServer proxy = GSYVideoManager.getProxy(getContext().getApplicationContext(), cachePath);

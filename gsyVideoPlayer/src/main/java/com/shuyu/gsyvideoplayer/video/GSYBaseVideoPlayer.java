@@ -719,4 +719,8 @@ public abstract class GSYBaseVideoPlayer extends FrameLayout implements GSYMedia
     public void setNeedShowWifiTip(boolean needShowWifiTip) {
         this.mNeedShowWifiTip = needShowWifiTip;
     }
+
+    public String getOriginUrl() {
+        return mOriginUrl;
+    }
 }
