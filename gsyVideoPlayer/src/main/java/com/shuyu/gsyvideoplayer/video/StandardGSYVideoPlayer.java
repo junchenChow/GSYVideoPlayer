@@ -207,7 +207,7 @@ public class StandardGSYVideoPlayer extends GSYVideoPlayer {
                 mFullscreenButton.setImageResource(R.drawable.icon_fullscreen);
             } else {
                 mFullscreenButton.setImageResource(R.drawable.icon_fullscreen);
-                mBackButton.setVisibility(View.GONE);
+//                mBackButton.setVisibility(View.GONE);
             }
             return true;
         }
@@ -415,6 +415,9 @@ public class StandardGSYVideoPlayer extends GSYVideoPlayer {
         mBottomProgressBar.setSecondaryProgress(0);
     }
 
+    public void onVideoPanelUiChange(boolean hide){
+    }
+
     //Unified management Ui
     private void changeUiToNormal() {
         Debuger.printfLog("changeUiToNormal");
@@ -448,6 +451,7 @@ public class StandardGSYVideoPlayer extends GSYVideoPlayer {
         mCoverImageView.setVisibility(View.VISIBLE);
         mBottomProgressBar.setVisibility(View.INVISIBLE);
         mLockScreen.setVisibility(GONE);
+        onVideoPanelUiChange(false);
     }
 
     private void changeUiToPrepareingClear() {
@@ -459,6 +463,7 @@ public class StandardGSYVideoPlayer extends GSYVideoPlayer {
         mBottomProgressBar.setVisibility(View.INVISIBLE);
         mCoverImageView.setVisibility(View.VISIBLE);
         mLockScreen.setVisibility(GONE);
+        onVideoPanelUiChange(true);
     }
 
     private void changeUiToPlayingShow() {
@@ -475,12 +480,14 @@ public class StandardGSYVideoPlayer extends GSYVideoPlayer {
         mBottomProgressBar.setVisibility(View.INVISIBLE);
         mLockScreen.setVisibility((mIfCurrentIsFullscreen && mNeedLockFull) ? VISIBLE : GONE);
         updateStartImage();
+        onVideoPanelUiChange(false);
     }
 
     private void changeUiToPlayingClear() {
         Debuger.printfLog("changeUiToPlayingClear");
         changeUiToClear();
         mBottomProgressBar.setVisibility(View.VISIBLE);
+        onVideoPanelUiChange(true);
     }
 
     private void changeUiToPauseShow() {
@@ -498,6 +505,7 @@ public class StandardGSYVideoPlayer extends GSYVideoPlayer {
         mLockScreen.setVisibility((mIfCurrentIsFullscreen && mNeedLockFull) ? VISIBLE : GONE);
         updateStartImage();
         updatePauseCover();
+        onVideoPanelUiChange(false);
     }
 
     private void changeUiToPauseClear() {
@@ -505,6 +513,7 @@ public class StandardGSYVideoPlayer extends GSYVideoPlayer {
         changeUiToClear();
         mBottomProgressBar.setVisibility(View.VISIBLE);
         updatePauseCover();
+        onVideoPanelUiChange(true);
     }
 
     private void changeUiToPlayingBufferingShow() {
@@ -523,6 +532,7 @@ public class StandardGSYVideoPlayer extends GSYVideoPlayer {
         mCoverImageView.setVisibility(View.INVISIBLE);
         mBottomProgressBar.setVisibility(View.INVISIBLE);
         mLockScreen.setVisibility(GONE);
+        onVideoPanelUiChange(false);
     }
 
     private void changeUiToPlayingBufferingClear() {
@@ -542,6 +552,7 @@ public class StandardGSYVideoPlayer extends GSYVideoPlayer {
         mBottomProgressBar.setVisibility(View.VISIBLE);
         mLockScreen.setVisibility(GONE);
         updateStartImage();
+        onVideoPanelUiChange(true);
     }
 
     private void changeUiToClear() {
@@ -557,6 +568,7 @@ public class StandardGSYVideoPlayer extends GSYVideoPlayer {
         mCoverImageView.setVisibility(View.INVISIBLE);
         mBottomProgressBar.setVisibility(View.INVISIBLE);
         mLockScreen.setVisibility(GONE);
+        onVideoPanelUiChange(true);
     }
 
     private void changeUiToCompleteShow() {
@@ -573,6 +585,7 @@ public class StandardGSYVideoPlayer extends GSYVideoPlayer {
         mBottomProgressBar.setVisibility(View.INVISIBLE);
         mLockScreen.setVisibility((mIfCurrentIsFullscreen && mNeedLockFull) ? VISIBLE : GONE);
         updateStartImage();
+        onVideoPanelUiChange(false);
     }
 
     private void changeUiToCompleteClear() {
@@ -589,6 +602,7 @@ public class StandardGSYVideoPlayer extends GSYVideoPlayer {
         mBottomProgressBar.setVisibility(View.VISIBLE);
         mLockScreen.setVisibility((mIfCurrentIsFullscreen && mNeedLockFull) ? VISIBLE : GONE);
         updateStartImage();
+        onVideoPanelUiChange(true);
     }
 
     private void changeUiToError() {
@@ -605,6 +619,7 @@ public class StandardGSYVideoPlayer extends GSYVideoPlayer {
         mBottomProgressBar.setVisibility(View.INVISIBLE);
         mLockScreen.setVisibility((mIfCurrentIsFullscreen && mNeedLockFull) ? VISIBLE : GONE);
         updateStartImage();
+        onVideoPanelUiChange(false);
     }
 
     protected void updateStartImage() {
@@ -891,6 +906,7 @@ public class StandardGSYVideoPlayer extends GSYVideoPlayer {
     }
 
     protected void hideAllWidget() {
+        onVideoPanelUiChange(true);
         mBottomContainer.setVisibility(View.INVISIBLE);
         mTopContainer.setVisibility(View.INVISIBLE);
         mBottomProgressBar.setVisibility(View.VISIBLE);
