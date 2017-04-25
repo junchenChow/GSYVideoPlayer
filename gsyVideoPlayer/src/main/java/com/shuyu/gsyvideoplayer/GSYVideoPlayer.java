@@ -635,7 +635,11 @@ public abstract class GSYVideoPlayer extends GSYBaseVideoPlayer implements View.
                     dismissVolumeDialog();
                     dismissBrightnessDialog();
                     if (mChangePosition) {
-                        GSYVideoManager.instance().getMediaPlayer().seekTo(mSeekTimePosition);
+                        try {
+                            GSYVideoManager.instance().getMediaPlayer().seekTo(mSeekTimePosition);
+                        } catch (IllegalStateException e) {
+                            e.printStackTrace();
+                        }
                         int duration = getDuration();
                         int progress = mSeekTimePosition * 100 / (duration == 0 ? 1 : duration);
                         mProgressBar.setProgress(progress);
@@ -793,7 +797,11 @@ public abstract class GSYVideoPlayer extends GSYBaseVideoPlayer implements View.
         }
         if (GSYVideoManager.instance().getMediaPlayer() != null && mCurrentState == CURRENT_STATE_PLAYING) {
             int time = seekBar.getProgress() * getDuration() / 100;
-            GSYVideoManager.instance().getMediaPlayer().seekTo(time);
+            try {
+                GSYVideoManager.instance().getMediaPlayer().seekTo(time);
+            }catch (IllegalStateException e){
+                e.printStackTrace();
+            }
         }
     }
 
@@ -802,11 +810,19 @@ public abstract class GSYVideoPlayer extends GSYBaseVideoPlayer implements View.
         if (mCurrentState != CURRENT_STATE_PREPAREING) return;
 
         if (GSYVideoManager.instance().getMediaPlayer() != null) {
-            GSYVideoManager.instance().getMediaPlayer().start();
+            try {
+                GSYVideoManager.instance().getMediaPlayer().start();
+            }catch (IllegalStateException e){
+                e.printStackTrace();
+            }
         }
 
         if (GSYVideoManager.instance().getMediaPlayer() != null && mSeekToInAdvance != -1) {
-            GSYVideoManager.instance().getMediaPlayer().seekTo(mSeekToInAdvance);
+            try {
+                GSYVideoManager.instance().getMediaPlayer().seekTo(mSeekToInAdvance);
+            }catch (IllegalStateException e){
+                e.printStackTrace();
+            }
             mSeekToInAdvance = -1;
         }
 
@@ -820,7 +836,11 @@ public abstract class GSYVideoPlayer extends GSYBaseVideoPlayer implements View.
         }
 
         if (GSYVideoManager.instance().getMediaPlayer() != null && mSeekOnStart > 0) {
-            GSYVideoManager.instance().getMediaPlayer().seekTo(mSeekOnStart);
+            try {
+                GSYVideoManager.instance().getMediaPlayer().seekTo(mSeekOnStart);
+            }catch (IllegalStateException e){
+                e.printStackTrace();
+            }
             mSeekOnStart = 0;
         }
 
