@@ -383,7 +383,7 @@ public abstract class GSYBaseVideoPlayer extends FrameLayout implements GSYMedia
         mIfCurrentIsFullscreen = false;
         int delay = 0;
         if (mOrientationUtils != null) {
-            delay = mOrientationUtils.backToProtVideo();
+            delay = mOrientationUtils.backToPortraitVideo();
             mOrientationUtils.setEnable(false);
             if (mOrientationUtils != null) {
                 mOrientationUtils.releaseListener();

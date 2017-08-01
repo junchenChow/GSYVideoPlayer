@@ -262,7 +262,7 @@ public class ListVideoUtil {
      * 处理正常逻辑
      */
     private void resolveToNormal() {
-        int delay = orientationUtils.backToProtVideo();
+        int delay = orientationUtils.backToPortraitVideo();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -296,7 +296,7 @@ public class ListVideoUtil {
      */
     private void resolveMaterialToNormal(final GSYVideoPlayer gsyVideoPlayer) {
         if (showFullAnimation && fullViewContainer instanceof FrameLayout) {
-            int delay = orientationUtils.backToProtVideo();
+            int delay = orientationUtils.backToPortraitVideo();
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
