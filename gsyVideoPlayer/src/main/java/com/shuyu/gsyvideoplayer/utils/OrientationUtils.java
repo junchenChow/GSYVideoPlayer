@@ -59,6 +59,13 @@ public class OrientationUtils {
     }
 
     /**
+     * @deprecated Use {@link backToPortraitVideo()}
+     */
+    public int backToProtVideo() {
+        return backToPortraitVideo();
+    }
+
+    /**
      * 列表返回的样式判断。因为立即旋转会导致界面跳动的问题
      */
     public int backToPortraitVideo() {
@@ -90,4 +97,3 @@ public class OrientationUtils {
         return mIsLand;
     }
 }
-
