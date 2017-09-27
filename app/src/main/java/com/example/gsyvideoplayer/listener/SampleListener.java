@@ -104,7 +104,27 @@ public class SampleListener implements StandardVideoAllCallBack {
     }
 
     @Override
+    public void onVideoPlayStatus(int status) {
+
+    }
+
+    @Override
     public void onVideoFocusChange(int focusCode) {
+
+    }
+
+    @Override
+    public void onDLNAConnectionSwitch(boolean on) {
+
+    }
+
+    @Override
+    public void onPlayToggle(boolean play) {
+
+    }
+
+    @Override
+    public void onTrackingTouchProgress(String progress) {
 
     }
 

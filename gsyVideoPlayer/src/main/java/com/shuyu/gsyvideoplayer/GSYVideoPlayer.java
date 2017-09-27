@@ -156,6 +156,11 @@ public abstract class GSYVideoPlayer extends GSYBaseVideoPlayer implements View.
         init(context);
     }
 
+    public GSYVideoPlayer(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        init(context);
+    }
+
     protected void init(Context context) {
         this.mContext = context;
         View.inflate(context, getLayoutId(), this);

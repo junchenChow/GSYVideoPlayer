@@ -119,6 +119,10 @@ public class StandardGSYVideoPlayer extends GSYVideoPlayer {
         super(context, attrs);
     }
 
+    public StandardGSYVideoPlayer(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+    }
+
     @Override
     protected void init(Context context) {
         super.init(context);

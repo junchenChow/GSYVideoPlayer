@@ -143,10 +143,10 @@ public class PlayActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         //先返回正常状态
-        if (orientationUtils.getScreenType() == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) {
-            videoPlayer.getFullscreenButton().performClick();
-            return;
-        }
+//        if (orientationUtils.getScreenType() == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) {
+//            videoPlayer.getFullscreenButton().performClick();
+//            return;
+//        }
         //释放所有
         videoPlayer.setStandardVideoAllCallBack(null);
         GSYVideoPlayer.releaseAllVideos();

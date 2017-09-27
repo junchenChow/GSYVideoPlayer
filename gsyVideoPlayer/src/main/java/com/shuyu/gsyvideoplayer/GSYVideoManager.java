@@ -111,6 +111,8 @@ public class GSYVideoManager implements IMediaPlayer.OnPreparedListener, IMediaP
         FileUtils.deleteFiles(new File(path));
     }
 
+
+
     /**
      * 删除url对应默认缓存文件
      */
